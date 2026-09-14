@@ -31,9 +31,11 @@ export default function App() {
         <CounterScreen key={session.id} session={session} onExit={handleExit} />
       ) : (
         <div className="app">
-          <main className="stack-center">
-            <AccessKeyGate onUnlock={handleUnlock} />
-          </main>
+          <div className="app__shell">
+            <main className="stack-center">
+              <AccessKeyGate onUnlock={handleUnlock} />
+            </main>
+          </div>
         </div>
       )}
     </>
