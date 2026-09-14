@@ -8,6 +8,11 @@ ponto acende, o anel pisca inteiro e o contador passa para o próximo combo.
 Cada contador é identificado por uma **chave de acesso**: é ela que decide qual
 contador você abre.
 
+Cada toque acende um ponto com onda, pulso e um `+1` subindo; ao fechar o combo
+o anel vira magenta e solta ondas de choque, faíscas e um flash na tela. O
+`zerar` passa por um diálogo de confirmação que mostra exatamente o que será
+apagado. Tudo respeita `prefers-reduced-motion`.
+
 ## Stack
 
 - Vite + React + TypeScript
@@ -90,11 +95,13 @@ antes de o Pages estar habilitado.
 ```
 src/
 ├─ components/
-│  ├─ AccessKeyGate.tsx    # tela da chave de acesso
-│  ├─ ComboRing.tsx        # círculo pontilhado em SVG
-│  ├─ ComboSizeDialog.tsx  # ajuste do tamanho do combo
-│  ├─ CounterScreen.tsx    # tela principal
-│  └─ SyncBadge.tsx        # indicador de sincronização
+│  ├─ AccessKeyGate.tsx      # tela da chave de acesso
+│  ├─ ComboBurst.tsx         # explosão de ondas e faíscas ao fechar o combo
+│  ├─ ComboRing.tsx          # círculo pontilhado em SVG
+│  ├─ ComboSizeDialog.tsx    # ajuste do tamanho do combo
+│  ├─ ConfirmResetDialog.tsx # confirmação do "zerar", com ícone de rachadura
+│  ├─ CounterScreen.tsx      # tela principal
+│  └─ SyncBadge.tsx          # indicador de sincronização
 ├─ lib/
 │  ├─ firebase.ts          # init lazy + detecção de configuração
 │  ├─ hash.ts              # SHA-256 da chave de acesso

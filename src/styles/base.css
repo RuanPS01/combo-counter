@@ -17,6 +17,8 @@ body {
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
+  /* As faiscas do combo saem do anel; `clip` evita barra de rolagem lateral. */
+  overflow-x: clip;
   /* Evita o "flash" azul de toque no mobile ao apertar o botao de contar. */
   -webkit-tap-highlight-color: transparent;
 }

@@ -1,16 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
 import { useCounter } from '../lib/useCounter'
+import { ComboBurst } from './ComboBurst'
 import { ComboRing } from './ComboRing'
 import { ComboSizeDialog } from './ComboSizeDialog'
+import { ConfirmResetDialog } from './ConfirmResetDialog'
 import { SyncBadge } from './SyncBadge'
 import type { Session } from '../lib/session'
 
-const COMPLETE_FLASH_MS = 750
+/** Quanto tempo o anel fica aceso por inteiro celebrando o combo fechado. */
+const COMBO_FLASH_MS = 1100
 
 export function CounterScreen({ session, onExit }: { session: Session; onExit: () => void }) {
   const { state, status, canUndo, increment, undo, reset, setComboSize } = useCounter(session.id)
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [resetOpen, setResetOpen] = useState(false)
   const [complete, setComplete] = useState(false)
+  // Contadores so para dar `key` nova as animacoes: trocar a key remonta o
+  // elemento e faz o CSS rodar de novo, mesmo em toques colados.
+  const [tick, setTick] = useState(0)
+  const [comboTick, setComboTick] = useState(0)
   const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(
@@ -22,23 +30,27 @@ export function CounterScreen({ session, onExit }: { session: Session; onExit: (
 
   function handleCount() {
     const closedCombo = increment()
-    globalThis.navigator?.vibrate?.(closedCombo ? [18, 45, 18] : 10)
+    setTick((value) => value + 1)
+    globalThis.navigator?.vibrate?.(closedCombo ? [25, 35, 25, 35, 70] : 10)
     if (!closedCombo) return
     // O estado ja voltou para zero; a animacao mostra o anel cheio por um instante.
+    setComboTick((value) => value + 1)
     setComplete(true)
     if (flashTimer.current) clearTimeout(flashTimer.current)
-    flashTimer.current = setTimeout(() => setComplete(false), COMPLETE_FLASH_MS)
+    flashTimer.current = setTimeout(() => setComplete(false), COMBO_FLASH_MS)
   }
 
   function handleReset() {
-    const confirmed = globalThis.confirm('Zerar este contador? Os combos fechados serão perdidos.')
-    if (confirmed) reset()
+    reset()
+    setResetOpen(false)
   }
 
   const shown = complete ? state.comboSize : state.count
 
   return (
-    <div className="app">
+    <div className="app" data-combo={complete}>
+      {complete && <div className="screen-flash" key={`flash-${comboTick}`} />}
+
       <header className="header">
         <div className="brand">
           <span className="brand__mark" />
@@ -70,33 +82,57 @@ export function CounterScreen({ session, onExit }: { session: Session; onExit: (
       <main className="stack-center">
         <div className={complete ? 'ring ring--complete' : 'ring'}>
           <ComboRing size={state.comboSize} value={state.count} complete={complete} />
+          {tick > 0 && <span className="ring__ripple" key={`ripple-${tick}`} />}
+          {complete && <ComboBurst key={`burst-${comboTick}`} />}
+
           <div className="ring__center">
-            <span className="ring__count">{shown}</span>
+            <span
+              className={tick > 0 ? 'ring__count ring__count--pop' : 'ring__count'}
+              key={`count-${tick}`}
+            >
+              {shown}
+            </span>
+            {tick > 0 && (
+              <span className="ring__plus" key={`plus-${tick}`}>
+                +1
+              </span>
+            )}
             <span className="ring__of">/ {state.comboSize}</span>
-            <span className="ring__label">{complete ? 'Combo!' : ''}</span>
+            <span className="ring__label" key={`label-${comboTick}`}>
+              {complete ? `Combo ${state.combos}!` : ''}
+            </span>
           </div>
         </div>
 
         <div className="stats">
           <div className="stat stat--alt">
-            <div className="stat__value">{state.combos}</div>
+            <div className="stat__value" key={`combos-${state.combos}`}>
+              {state.combos}
+            </div>
             <div className="stat__label">Combos</div>
           </div>
           <div className="stat">
-            <div className="stat__value">{state.total}</div>
+            <div className="stat__value" key={`total-${state.total}`}>
+              {state.total}
+            </div>
             <div className="stat__label">Total</div>
           </div>
         </div>
 
         <button className="count-btn" type="button" onClick={handleCount} data-complete={complete}>
-          Contar
+          {tick > 0 && <span className="count-btn__wave" key={`wave-${tick}`} />}
+          <span className="count-btn__text">Contar</span>
         </button>
 
         <div className="secondary-row">
           <button className="ghost-btn" type="button" onClick={undo} disabled={!canUndo}>
             Desfazer
           </button>
-          <button className="ghost-btn ghost-btn--danger" type="button" onClick={handleReset}>
+          <button
+            className="ghost-btn ghost-btn--danger"
+            type="button"
+            onClick={() => setResetOpen(true)}
+          >
             Zerar
           </button>
         </div>
@@ -111,6 +147,15 @@ export function CounterScreen({ session, onExit }: { session: Session; onExit: (
         value={state.comboSize}
         onClose={() => setSettingsOpen(false)}
         onSave={setComboSize}
+      />
+
+      <ConfirmResetDialog
+        open={resetOpen}
+        count={state.count}
+        comboSize={state.comboSize}
+        combos={state.combos}
+        onCancel={() => setResetOpen(false)}
+        onConfirm={handleReset}
       />
     </div>
   )
