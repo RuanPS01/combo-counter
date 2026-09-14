@@ -49,98 +49,100 @@ export function CounterScreen({ session, onExit }: { session: Session; onExit: (
 
   return (
     <div className="app" data-combo={complete}>
-      {complete && <div className="screen-flash" key={`flash-${comboTick}`} />}
+      <div className="app__shell">
+        {complete && <div className="screen-flash" key={`flash-${comboTick}`} />}
 
-      <header className="header">
-        <div className="brand">
-          <span className="brand__mark" />
-          <span>
-            <span className="brand__name">Combo</span>
-            <span className="brand__key"> {session.label}</span>
-          </span>
-        </div>
-        <div className="header__actions">
-          <SyncBadge status={status} />
-          <button
-            className="chip"
-            type="button"
-            onClick={() => setSettingsOpen(true)}
-            aria-label={`Tamanho do combo: ${state.comboSize}. Toque para alterar.`}
-          >
-            Combo <span className="chip__value">{state.comboSize}</span>
-          </button>
-          <button className="icon-btn" type="button" onClick={onExit} aria-label="Trocar de chave">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
-          </button>
-        </div>
-      </header>
-
-      <main className="stack-center">
-        <div className={complete ? 'ring ring--complete' : 'ring'}>
-          <ComboRing size={state.comboSize} value={state.count} complete={complete} />
-          {tick > 0 && <span className="ring__ripple" key={`ripple-${tick}`} />}
-          {complete && <ComboBurst key={`burst-${comboTick}`} />}
-
-          <div className="ring__center">
-            <span
-              className={tick > 0 ? 'ring__count ring__count--pop' : 'ring__count'}
-              key={`count-${tick}`}
+        <header className="header">
+          <div className="brand">
+            <span className="brand__mark" />
+            <span>
+              <span className="brand__name">Combo</span>
+              <span className="brand__key"> {session.label}</span>
+            </span>
+          </div>
+          <div className="header__actions">
+            <SyncBadge status={status} />
+            <button
+              className="chip"
+              type="button"
+              onClick={() => setSettingsOpen(true)}
+              aria-label={`Tamanho do combo: ${state.comboSize}. Toque para alterar.`}
             >
-              {shown}
-            </span>
-            {tick > 0 && (
-              <span className="ring__plus" key={`plus-${tick}`}>
-                +1
+              Combo <span className="chip__value">{state.comboSize}</span>
+            </button>
+            <button className="icon-btn" type="button" onClick={onExit} aria-label="Trocar de chave">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <main className="stack-center">
+          <div className={complete ? 'ring ring--complete' : 'ring'}>
+            <ComboRing size={state.comboSize} value={state.count} complete={complete} />
+            {tick > 0 && <span className="ring__ripple" key={`ripple-${tick}`} />}
+            {complete && <ComboBurst key={`burst-${comboTick}`} />}
+
+            <div className="ring__center">
+              <span
+                className={tick > 0 ? 'ring__count ring__count--pop' : 'ring__count'}
+                key={`count-${tick}`}
+              >
+                {shown}
               </span>
-            )}
-            <span className="ring__of">/ {state.comboSize}</span>
-            <span className="ring__label" key={`label-${comboTick}`}>
-              {complete ? `Combo ${state.combos}!` : ''}
-            </span>
-          </div>
-        </div>
-
-        <div className="stats">
-          <div className="stat stat--alt">
-            <div className="stat__value" key={`combos-${state.combos}`}>
-              {state.combos}
+              {tick > 0 && (
+                <span className="ring__plus" key={`plus-${tick}`}>
+                  +1
+                </span>
+              )}
+              <span className="ring__of">/ {state.comboSize}</span>
+              <span className="ring__label" key={`label-${comboTick}`}>
+                {complete ? `Combo ${state.combos}!` : ''}
+              </span>
             </div>
-            <div className="stat__label">Combos</div>
           </div>
-          <div className="stat">
-            <div className="stat__value" key={`total-${state.total}`}>
-              {state.total}
+
+          <div className="stats">
+            <div className="stat stat--alt">
+              <div className="stat__value" key={`combos-${state.combos}`}>
+                {state.combos}
+              </div>
+              <div className="stat__label">Combos</div>
             </div>
-            <div className="stat__label">Total</div>
+            <div className="stat">
+              <div className="stat__value" key={`total-${state.total}`}>
+                {state.total}
+              </div>
+              <div className="stat__label">Total</div>
+            </div>
           </div>
-        </div>
 
-        <button className="count-btn" type="button" onClick={handleCount} data-complete={complete}>
-          {tick > 0 && <span className="count-btn__wave" key={`wave-${tick}`} />}
-          <span className="count-btn__text">Contar</span>
-        </button>
-
-        <div className="secondary-row">
-          <button className="ghost-btn" type="button" onClick={undo} disabled={!canUndo}>
-            Desfazer
+          <button className="count-btn" type="button" onClick={handleCount} data-complete={complete}>
+            {tick > 0 && <span className="count-btn__wave" key={`wave-${tick}`} />}
+            <span className="count-btn__text">Contar</span>
           </button>
-          <button
-            className="ghost-btn ghost-btn--danger"
-            type="button"
-            onClick={() => setResetOpen(true)}
-          >
-            Zerar
-          </button>
-        </div>
 
-        <p className="sr-only" role="status" aria-live="polite">
-          {state.count} de {state.comboSize} no combo atual, {state.combos} combos fechados.
-        </p>
-      </main>
+          <div className="secondary-row">
+            <button className="ghost-btn" type="button" onClick={undo} disabled={!canUndo}>
+              Desfazer
+            </button>
+            <button
+              className="ghost-btn ghost-btn--danger"
+              type="button"
+              onClick={() => setResetOpen(true)}
+            >
+              Zerar
+            </button>
+          </div>
+
+          <p className="sr-only" role="status" aria-live="polite">
+            {state.count} de {state.comboSize} no combo atual, {state.combos} combos fechados.
+          </p>
+        </main>
+      </div>
 
       <ComboSizeDialog
         open={settingsOpen}

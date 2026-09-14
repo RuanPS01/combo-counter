@@ -1,5 +1,15 @@
 /* ---------------------------------------------------------------- layout */
+/*
+ * `.app` existe so para recortar: a tremida do combo e as faiscas ficam presas
+ * aqui dentro e nunca entram na area rolavel do documento. Sem isso, o
+ * transform da tremida criava overflow horizontal, o navegador abria a barra
+ * de rolagem e a barra vertical vinha junto — o scroll piscava a cada combo.
+ */
 .app {
+  overflow: clip;
+}
+
+.app__shell {
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -820,7 +830,7 @@
 
 /* --------------------------------------------------- animacao: combo novo */
 
-.app[data-combo='true'] {
+.app[data-combo='true'] .app__shell {
   animation: shake 0.6s var(--ease-out);
 }
 
