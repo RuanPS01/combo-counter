@@ -31,17 +31,19 @@ jobs:
 
       - run: npm run lint
 
-      - name: Configurar GitHub Pages
-        id: pages
-        uses: actions/configure-pages@v5
-
+      # Derivado do nome do repositorio em vez de actions/configure-pages,
+      # que exige o Pages ja habilitado e por isso quebraria os PRs.
       - name: Resolver base path do Vite
         id: base
         run: |
-          raw='${{ steps.pages.outputs.base_path }}'
-          [ -z "$raw" ] && raw='/'
-          case "$raw" in */) ;; *) raw="$raw/" ;; esac
-          echo "value=$raw" >> "$GITHUB_OUTPUT"
+          repo=$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')
+          owner=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')
+          if [ "$repo" = "$owner.github.io" ]; then
+            # Site de usuario/organizacao: servido na raiz do dominio.
+            echo 'value=/' >> "$GITHUB_OUTPUT"
+          else
+            echo "value=/$repo/" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Build
         run: npm run build

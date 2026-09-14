@@ -80,9 +80,10 @@ Para ativar:
    `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID` e
    `VITE_FIREBASE_APP_ID`. Sem eles a publicação sai em modo local.
 
-O base path (`/combo-counter/`) é resolvido automaticamente pelo
-`actions/configure-pages`, então o app funciona tanto em site de projeto quanto
-em site de usuário.
+O base path (`/combo-counter/`) é derivado do nome do repositório dentro do
+próprio workflow, então o app funciona tanto em site de projeto quanto em site
+de usuário (`<owner>.github.io`, servido na raiz) — e os PRs são validados mesmo
+antes de o Pages estar habilitado.
 
 ## Estrutura
 
