@@ -1,0 +1,38 @@
+rules_version = '2';
+
+// Regras de exemplo para a colecao de contadores.
+// O id do documento e o SHA-256 da chave de acesso: a chave em si nunca chega
+// ao servidor e nao da para descobri-la a partir do id.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      // O app faz login anonimo automaticamente. Se voce preferir um banco
+      // aberto, troque o corpo desta funcao por `return true` e defina
+      // VITE_FIREBASE_ANONYMOUS_AUTH=false no build.
+      return request.auth != null;
+    }
+
+    function validId(id) {
+      return id.matches('^[a-f0-9]{64}$') || id.matches('^fnv[a-f0-9]{8}$');
+    }
+
+    function validCounter() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['count', 'combos', 'comboSize', 'total', 'updatedAt'])
+        && d.count is int && d.count >= 0
+        && d.combos is int && d.combos >= 0
+        && d.total is int && d.total >= 0
+        && d.comboSize is int && d.comboSize >= 2 && d.comboSize <= 200
+        && d.updatedAt is int && d.updatedAt > 0;
+    }
+
+    match /counters/{counterId} {
+      allow get: if signedIn() && validId(counterId);
+      // Ninguem pode varrer a colecao: so quem sabe a chave chega ao documento.
+      allow list: if false;
+      allow create, update: if signedIn() && validId(counterId) && validCounter();
+      allow delete: if false;
+    }
+  }
+}
