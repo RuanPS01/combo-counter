@@ -1,0 +1,119 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+  /* As faiscas do combo saem do anel; `clip` evita barra de rolagem lateral. */
+  overflow-x: clip;
+  /* Evita o "flash" azul de toque no mobile ao apertar o botao de contar. */
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 3px;
+}
+
+/* Fundo: grade em perspectiva + duas auroras que respiram devagar. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgb(34 224 255 / 12%), transparent 60%),
+    radial-gradient(90% 70% at 50% 110%, rgb(255 62 200 / 12%), transparent 60%),
+    var(--bg-deep);
+}
+
+.backdrop::before {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  background-image:
+    linear-gradient(rgb(90 170 255 / 8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(90 170 255 / 8%) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(75% 60% at 50% 45%, #000 20%, transparent 78%);
+}
+
+.backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 3%) 0 1px,
+    transparent 1px 3px
+  );
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.aurora {
+  position: absolute;
+  width: 62vmax;
+  height: 62vmax;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  animation: drift 24s var(--ease-out) infinite alternate;
+}
+
+.aurora--cyan {
+  top: -22vmax;
+  left: -14vmax;
+  background: radial-gradient(circle, rgb(34 224 255 / 55%), transparent 65%);
+}
+
+.aurora--magenta {
+  right: -18vmax;
+  bottom: -24vmax;
+  background: radial-gradient(circle, rgb(255 62 200 / 50%), transparent 65%);
+  animation-delay: -12s;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6vmax, 4vmax, 0) scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

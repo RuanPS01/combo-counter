@@ -1,0 +1,31 @@
+:root {
+  /* Base escura com leve tom azulado, para o neon "queimar" por cima. */
+  --bg: #05060f;
+  --bg-deep: #02030a;
+  --surface: rgb(12 18 38 / 72%);
+  --surface-solid: #0a1026;
+  --line: rgb(120 190 255 / 16%);
+  --line-strong: rgb(120 190 255 / 34%);
+
+  --text: #e8f3ff;
+  --text-dim: #8ea6c8;
+  --text-faint: #5c7092;
+
+  --neon: #22e0ff;
+  --neon-soft: #7af3ff;
+  --magenta: #ff3ec8;
+  --violet: #8b5cf6;
+  --lime: #6bff9e;
+  --danger: #ff5f6d;
+
+  --glow-neon: 0 0 6px rgb(34 224 255 / 90%), 0 0 22px rgb(34 224 255 / 45%);
+  --glow-magenta: 0 0 8px rgb(255 62 200 / 80%), 0 0 28px rgb(255 62 200 / 40%);
+
+  --radius: 14px;
+  --radius-lg: 22px;
+
+  --font: ui-sans-serif, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22e0ff"/>
+      <stop offset="100%" stop-color="#ff3ec8"/>
+    </linearGradient>
+    <radialGradient id="bg" cx="50%" cy="38%">
+      <stop offset="0%" stop-color="#0d1730"/>
+      <stop offset="100%" stop-color="#05060f"/>
+    </radialGradient>
+    <filter id="b" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="15.30"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112.64" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="186" fill="none" stroke="#1b2a4d" stroke-width="2.00"/>
+  <circle cx="256.00" cy="70.00" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="256.00" cy="70.00" r="17" fill="url(#g)"/><circle cx="304.14" cy="76.34" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="304.14" cy="76.34" r="17" fill="url(#g)"/><circle cx="349.00" cy="94.92" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="349.00" cy="94.92" r="17" fill="url(#g)"/><circle cx="387.52" cy="124.48" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="387.52" cy="124.48" r="17" fill="url(#g)"/><circle cx="417.08" cy="163.00" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="417.08" cy="163.00" r="17" fill="url(#g)"/><circle cx="435.66" cy="207.86" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="435.66" cy="207.86" r="17" fill="url(#g)"/><circle cx="442.00" cy="256.00" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="442.00" cy="256.00" r="17" fill="url(#g)"/><circle cx="435.66" cy="304.14" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="435.66" cy="304.14" r="17" fill="url(#g)"/><circle cx="417.08" cy="349.00" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="417.08" cy="349.00" r="17" fill="url(#g)"/><circle cx="387.52" cy="387.52" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="387.52" cy="387.52" r="17" fill="url(#g)"/><circle cx="349.00" cy="417.08" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="349.00" cy="417.08" r="17" fill="url(#g)"/><circle cx="304.14" cy="435.66" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="304.14" cy="435.66" r="17" fill="url(#g)"/><circle cx="256.00" cy="442.00" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="256.00" cy="442.00" r="17" fill="url(#g)"/><circle cx="207.86" cy="435.66" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="207.86" cy="435.66" r="17" fill="url(#g)"/><circle cx="163.00" cy="417.08" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="163.00" cy="417.08" r="17" fill="url(#g)"/><circle cx="124.48" cy="387.52" r="17" fill="url(#g)" filter="url(#b)"/><circle cx="124.48" cy="387.52" r="17" fill="url(#g)"/><circle cx="94.92" cy="349.00" r="12.24" fill="#1b2a4d"/><circle cx="76.34" cy="304.14" r="12.24" fill="#1b2a4d"/><circle cx="70.00" cy="256.00" r="12.24" fill="#1b2a4d"/><circle cx="76.34" cy="207.86" r="12.24" fill="#1b2a4d"/><circle cx="94.92" cy="163.00" r="12.24" fill="#1b2a4d"/><circle cx="124.48" cy="124.48" r="12.24" fill="#1b2a4d"/><circle cx="163.00" cy="94.92" r="12.24" fill="#1b2a4d"/><circle cx="207.86" cy="76.34" r="12.24" fill="#1b2a4d"/>
+  <circle cx="256" cy="256" r="58.00" fill="url(#g)" filter="url(#b)" opacity="0.9"/>
+  <circle cx="256" cy="256" r="46.00" fill="#05060f"/>
+  <circle cx="256" cy="256" r="46.00" fill="none" stroke="url(#g)" stroke-width="8.00"/>
+</svg>
